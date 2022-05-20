@@ -23,8 +23,8 @@ xhttp.onreadystatechange = function() {
         }
 
         //showing the data on screen
-        console.log(response)
         details.innerHTML = format(response);
+        addButton(response.id,response.name,response.image.url);
     }
 };
 
@@ -52,7 +52,9 @@ const format = (data) =>{
 
                 </p>
                 <div class="text-left d-flex flex-row-reverse" style="font-size:xx-large">
-                <div onclick=${addFav(data)}><i class="fa-regular fa-heart"></i></div>
+                <div id="button${data.id}">
+                
+                </div>
                 </div>    
             </div>
         </div>`);
@@ -71,20 +73,53 @@ const listdata = (list) =>{
 
 
 
-
-const addFav =(data) =>{
-    let oldFavList = JSON.parse(localStorage.getItem("favHeroes")) || [];
+const addFav = (id, name, url) => {
+    let oldFavList = JSON.parse(localStorage.getItem("fav")) || [];
+    for (let i = 0; i < oldFavList.length; i++) {
+        if (oldFavList[i].id == id) return;
+    }
     let favItem = {
-        id: data.id,
-        name: data.name,
-        image: data.image.url
+        id: id,
+        name: name,
+        image: url
     }
     oldFavList.push(favItem);
-    console.log(oldFavList);
-    
-    localStorage.setItem('favHeroes', JSON.stringify(oldFavList));
+    localStorage.setItem('fav', JSON.stringify(oldFavList));
+    div = document.getElementById('button'+id);
+    div.innerHTML = `<div onclick="remFav(${id},'${name}','${url}')"><i class="fa-solid fa-heart-circle-minus"></i></div>`;
+};
+
+const remFav = (id,name,url) =>{
+    let oldFavList = JSON.parse(localStorage.getItem("fav")) || [];
+    for(let i=0;i<oldFavList.length;i++){
+        if(oldFavList[i].id==id) oldFavList.splice(i, 1);
+    }
+    localStorage.setItem('fav', JSON.stringify(oldFavList));
+    div = document.getElementById('button'+id);
+    div.innerHTML = `<div onclick="addFav(${id},'${name}','${url}')"><i class="fa-regular fa-heart"></i></div>`;
+};
 
 
+
+
+const addButton = (id,name,url)=>{
+    // console.log("Adding button");
+    let oldFavList = JSON.parse(localStorage.getItem("fav")) || [];
+    div = document.getElementById('button'+id);
+    for (let i = 0; i < oldFavList.length; i++) {
+        if (oldFavList[i].id == id) {
+            div.innerHTML = `<div onclick="remFav(${id},'${name}','${url}')"><i class="fa-solid fa-heart-circle-minus"></i></div>`;
+            return;
+        }
+    }
+    div.innerHTML = `<div onclick="addFav(${id},'${name}','${url}')"><i class="fa-regular fa-heart"></i></div>`;
 
 }
+
+
+
+
+
+
+
 
