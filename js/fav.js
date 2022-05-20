@@ -1,27 +1,19 @@
+// Get the Div to Add Fav hero to it
 const fav = document.getElementById("favList");
 
+
+
+// Remove form Fav button click handler
 const remFav = (id) =>{
     let oldFavList = JSON.parse(localStorage.getItem("fav")) || [];
     for(let i=0;i<oldFavList.length;i++){
         if(oldFavList[i].id==id) oldFavList.splice(i, 1);
     }
     localStorage.setItem('fav', JSON.stringify(oldFavList));
+    // Reload After the removal from list
     location.reload()
 }
-
-
-const button = (data) =>{
-    str = "";
-    let oldFavList = JSON.parse(localStorage.getItem("fav")) || [];
-    for(let i=0;i<oldFavList.length;i++){
-        if(oldFavList[i].id==data.id){
-            str=`<div onclick="remFav(${data.id})"><i class="fa-solid fa-heart-circle-minus"></i></div>`;
-        }
-        if(str=="") str = `<div onclick="addFav(${data.id},'${data.name}','${data.image.url}')"><i class="fa-regular fa-heart"></i></div>`;
-    }
-}
-
-
+// Format Jason To the Displable Html Code
 const format = (data) =>{
     
     
@@ -42,14 +34,14 @@ const format = (data) =>{
 };
 
 
-
+// Fav List
 let favList = JSON.parse(localStorage.getItem("fav")) || [];
 let str = "";
 
 for (let data of favList){
     str+=format(data);
 }
-
+// Showing data
 fav.innerHTML=str;
 
 

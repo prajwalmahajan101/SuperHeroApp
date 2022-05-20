@@ -1,3 +1,4 @@
+/* Bg img css */
 body{
     background:url("../img/bg.jpg");
     background-repeat: no-repeat;
@@ -5,6 +6,7 @@ body{
     background-size: cover
 }
 
+/* Carousel Img css */
 .carouselimg{
     height: 70vh;
     min-height:200px;
@@ -16,6 +18,7 @@ body{
 
 }
 
+/* Carousel contianer Css */
 #caro{
     height: 70vh;
     min-height:200px;
@@ -25,6 +28,8 @@ body{
     max-width: 100vh;
 
 }
+
+/*Hero img css  */
 
 .result-img{
     width: 100%;
